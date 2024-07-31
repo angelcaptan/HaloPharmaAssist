@@ -10,7 +10,7 @@ $all_products = get_all_products();
 <!doctype html>
 <html lang="en">
 
-<?php include 'Navigation.php'; ?>
+<?php include 'navigation.php'; ?>
 <div class="content-page">
     <div class="container-fluid">
         <div class="row">
