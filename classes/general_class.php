@@ -145,7 +145,7 @@ class general_class extends db_connection
         $query = "SELECT s.sale_id, s.reference_no, s.customer_name, s.sale_date, s.total_amount, s.sale_status, s.payment_status, s.sale_note, u.first_name as biller_name, p.product_name
               FROM sales s
               JOIN Users u ON s.biller_id = u.user_id
-              JOIN products p ON s.product_id = p.product_id
+              JOIN Products p ON s.product_id = p.product_id
               WHERE 1=1";
 
         if (!empty($filterStatus)) {
@@ -188,7 +188,7 @@ class general_class extends db_connection
 
         $query = "SELECT COUNT(*) as total FROM sales s
               JOIN Users u ON s.biller_id = u.user_id
-              JOIN products p ON s.product_id = p.product_id
+              JOIN Products p ON s.product_id = p.product_id
               WHERE 1=1";
 
         if (!empty($filterStatus)) {
@@ -313,7 +313,7 @@ class general_class extends db_connection
         $query = "SELECT p.product_id, p.product_name, c.category_name, p.price, p.quantity, p.expiry_date, p.total_amount, p.image 
               FROM Products p
               JOIN Categories c ON p.category_id = c.category_id
-              WHERE p.archived = 0";  // Exclude archived products
+              WHERE p.archived = 0";  // Exclude archived Products
 
         if ($filterCategory != '') {
             $query .= " AND p.category_id = ?";
@@ -331,12 +331,12 @@ class general_class extends db_connection
 
         $stmt->execute();
         $result = $stmt->get_result();
-        $products = $result->fetch_all(MYSQLI_ASSOC);
+        $Products = $result->fetch_all(MYSQLI_ASSOC);
 
         $stmt->close();
         $conn->close();
 
-        return $products;
+        return $Products;
     }
 
 
@@ -344,7 +344,7 @@ class general_class extends db_connection
     {
         $conn = $this->db_conn();
 
-        $query = "SELECT COUNT(*) as total FROM Products WHERE archived = 0";  // Exclude archived products
+        $query = "SELECT COUNT(*) as total FROM Products WHERE archived = 0";  // Exclude archived Products
 
         if ($filterCategory != '') {
             $query .= " AND category_id = ?";
@@ -591,7 +591,7 @@ class general_class extends db_connection
     {
         $sql = "SELECT r.return_id, r.return_date, r.reference_no, r.receiver_name, r.customer_name, p.product_name, r.quantity, r.total_amount, r.return_status, r.return_note 
         FROM returns r 
-        JOIN products p ON r.product_id = p.product_id";
+        JOIN Products p ON r.product_id = p.product_id";
 
         // Apply filters if any
         if (!empty($filter)) {
@@ -645,7 +645,7 @@ class general_class extends db_connection
 
     public function getTotalReturns($filter = [])
     {
-        $sql = "SELECT COUNT(*) as total FROM returns r JOIN products p ON r.product_id = p.product_id";
+        $sql = "SELECT COUNT(*) as total FROM returns r JOIN Products p ON r.product_id = p.product_id";
 
         // Apply filters if any
         if (!empty($filter)) {
@@ -716,11 +716,11 @@ class general_class extends db_connection
 
         $stmt->execute();
         $result = $stmt->get_result();
-        $products = $result->fetch_all(MYSQLI_ASSOC);
+        $Products = $result->fetch_all(MYSQLI_ASSOC);
 
         $stmt->close();
 
-        return $products;
+        return $Products;
     }
 
 
@@ -955,9 +955,9 @@ class general_class extends db_connection
             return [];
         }
 
-        // Prepare the SQL statement to fetch products by IDs
+        // Prepare the SQL statement to fetch Products by IDs
         $placeholders = implode(',', array_fill(0, count($product_ids), '?'));
-        $stmt = $this->db_conn()->prepare("SELECT * FROM products WHERE product_id IN ($placeholders)");
+        $stmt = $this->db_conn()->prepare("SELECT * FROM Products WHERE product_id IN ($placeholders)");
 
         if ($stmt === false) {
             return "Error preparing statement.";
@@ -968,11 +968,11 @@ class general_class extends db_connection
         $stmt->bind_param($types, ...$product_ids);
         $stmt->execute();
         $result = $stmt->get_result();
-        $products = $result->fetch_all(MYSQLI_ASSOC);
+        $Products = $result->fetch_all(MYSQLI_ASSOC);
 
         $stmt->close();
 
-        return $products;
+        return $Products;
     }
 
 
@@ -980,7 +980,7 @@ class general_class extends db_connection
 
     //  stock  management 
 
-    public function get_low_stock_products_with_category()
+    public function get_low_stock_Products_with_category()
     {
         $conn = $this->db_conn();
         $query = "
@@ -998,15 +998,15 @@ class general_class extends db_connection
         $stmt->bind_param("i", $low_stock_threshold);
         $stmt->execute();
         $result = $stmt->get_result();
-        $low_stock_products = $result->fetch_all(MYSQLI_ASSOC);
+        $low_stock_Products = $result->fetch_all(MYSQLI_ASSOC);
 
         $stmt->close();
         $conn->close();
 
-        return $low_stock_products;
+        return $low_stock_Products;
     }
 
-    public function get_soon_to_expire_products_with_category()
+    public function get_soon_to_expire_Products_with_category()
     {
         $conn = $this->db_conn();
         $query = "
@@ -1024,12 +1024,12 @@ class general_class extends db_connection
         $stmt->bind_param("s", $one_week_ahead);
         $stmt->execute();
         $result = $stmt->get_result();
-        $soon_to_expire_products = $result->fetch_all(MYSQLI_ASSOC);
+        $soon_to_expire_Products = $result->fetch_all(MYSQLI_ASSOC);
 
         $stmt->close();
         $conn->close();
 
-        return $soon_to_expire_products;
+        return $soon_to_expire_Products;
     }
 
 
@@ -1066,7 +1066,7 @@ class general_class extends db_connection
 
     public function updateProductQuantityForReturn($product_id, $quantity_change)
     {
-        $stmt = $this->db_conn()->prepare("UPDATE products SET quantity = quantity + ? WHERE product_id = ?");
+        $stmt = $this->db_conn()->prepare("UPDATE Products SET quantity = quantity + ? WHERE product_id = ?");
         if ($stmt === false) {
             return false;
         }
