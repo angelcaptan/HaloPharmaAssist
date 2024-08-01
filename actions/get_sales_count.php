@@ -3,7 +3,7 @@ include_once (__DIR__ . "/../controllers/general_controller.php");
 
 $conn = (new db_connection())->db_conn();
 
-$sql = "SELECT COUNT(*) as sales_count FROM sales";
+$sql = "SELECT COUNT(*) as sales_count FROM Sales";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
