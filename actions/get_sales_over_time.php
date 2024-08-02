@@ -8,7 +8,7 @@ $query = "
         DATE(s.sale_date) as sale_date, 
         SUM(s.total_amount) as total_sales 
     FROM 
-        Sales s
+        sales s
     GROUP BY 
         DATE(s.sale_date)
     ORDER BY 
