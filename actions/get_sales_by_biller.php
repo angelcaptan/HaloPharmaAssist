@@ -15,7 +15,7 @@ FROM (
         DATE(s.sale_date) as sale_date, 
         c.category_name,
         SUM(s.total_amount) as total_sales,
-        ROW_NUMBER() OVER (PARTITION BY s.biller_id ORDER BY SUM(s.total_amount) DESC) as rank
+        ROW_NUMBER() OVER (PARTITION BY s.biller_id ORDER BY SUM(s.total_amount) DESC) as `rank`
     FROM 
         Sales s
     JOIN 
@@ -28,7 +28,7 @@ FROM (
         s.biller_id, p.category_id, DATE(s.sale_date)
 ) as RankedCategories
 WHERE
-    rank <= 5
+    `rank` <= 5
 ORDER BY
     biller_name, total_sales DESC;
 ";
