@@ -18,15 +18,15 @@ if ($user_id) {
     $user_gender = $user_info['gender'];
 
     // Set the avatar based on gender
-    $avatar = ($user_gender == 'Female') ? BASE_URL . 'assets/images/user/female_avatar.jpg' : BASE_URL . 'assets/images/user/male_avatar.jpg';
+    $avatar = ($user_gender == 'Female') ? 'assets/images/user/female_avatar.jpg' : 'assets/images/user/male_avatar.jpg';
 } else {
     // Default values if user is not logged in or session has expired
     $user_email = 'user@example.com';
     $user_role = 'Role Not Set';
-    $avatar = BASE_URL . 'assets/images/user/default_avatar.png'; // Default avatar
-
+    $avatar = 'assets/images/user/default_avatar.png'; // Default avatar
 }
 ?>
+
 
 
 <head>
