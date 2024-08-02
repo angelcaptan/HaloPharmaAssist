@@ -143,7 +143,7 @@ class general_class extends db_connection
         $conn = $this->db_conn();
 
         $query = "SELECT s.sale_id, s.reference_no, s.customer_name, s.sale_date, s.total_amount, s.sale_status, s.payment_status, s.sale_note, u.first_name as biller_name, p.product_name
-              FROM sales s
+              FROM Sales s
               JOIN Users u ON s.biller_id = u.user_id
               JOIN Products p ON s.product_id = p.product_id
               WHERE 1=1";
@@ -186,7 +186,7 @@ class general_class extends db_connection
     {
         $conn = $this->db_conn();
 
-        $query = "SELECT COUNT(*) as total FROM sales s
+        $query = "SELECT COUNT(*) as total FROM Sales s
               JOIN Users u ON s.biller_id = u.user_id
               JOIN Products p ON s.product_id = p.product_id
               WHERE 1=1";
@@ -439,7 +439,7 @@ class general_class extends db_connection
         $product_id = $sale['product_id'];
 
         $conn = $this->db_conn();
-        $query = "DELETE FROM sales WHERE sale_id = ?";
+        $query = "DELETE FROM Sales WHERE sale_id = ?";
         $stmt = $conn->prepare($query);
         if ($stmt === false) {
             return false;
@@ -564,7 +564,7 @@ class general_class extends db_connection
 
     public function getAllUsers()
     {
-        $stmt = $this->db_conn()->prepare("SELECT * FROM users WHERE deleted_at IS NULL");
+        $stmt = $this->db_conn()->prepare("SELECT * FROM Users WHERE deleted_at IS NULL");
 
         if ($stmt === false) {
             return [];
@@ -877,7 +877,7 @@ class general_class extends db_connection
         $old_quantity = $old_sale['quantity'];
         $product_id = $old_sale['product_id'];
 
-        $stmt = $this->db_conn()->prepare("UPDATE sales SET sale_date = ?, customer_name = ?, total_amount = ?, sale_status = ?, payment_status = ?, sale_note = ? WHERE sale_id = ?");
+        $stmt = $this->db_conn()->prepare("UPDATE Sales SET sale_date = ?, customer_name = ?, total_amount = ?, sale_status = ?, payment_status = ?, sale_note = ? WHERE sale_id = ?");
         if ($stmt === false) {
             return false;
         }
@@ -1134,7 +1134,7 @@ class general_class extends db_connection
     // Chart Functions
     public function getCustomersCount($timeframe)
     {
-        $sql = "SELECT COUNT(DISTINCT customer_name) AS count FROM sales WHERE ";
+        $sql = "SELECT COUNT(DISTINCT customer_name) AS count FROM Sales WHERE ";
 
         switch ($timeframe) {
             case 'day':
@@ -1157,7 +1157,7 @@ class general_class extends db_connection
     }
 
     public function getProductsSoldCount($timeframe) {
-        $sql = "SELECT SUM(quantity) AS count FROM sales WHERE ";
+        $sql = "SELECT SUM(quantity) AS count FROM Sales WHERE ";
 
         switch ($timeframe) {
             case 'day':
