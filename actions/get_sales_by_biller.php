@@ -17,7 +17,7 @@ FROM (
         SUM(s.total_amount) as total_sales,
         ROW_NUMBER() OVER (PARTITION BY s.biller_id ORDER BY SUM(s.total_amount) DESC) as rank
     FROM 
-        Sales s
+        sales s
     JOIN 
         Products p ON s.product_id = p.product_id
     JOIN 
