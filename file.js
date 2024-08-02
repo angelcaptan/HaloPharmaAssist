@@ -196,50 +196,63 @@ $(document).ready(function() {
 });
 
 
-// fetch and Display Sales Over Time
+// stacked barchart for sales and biller category
 $(document).ready(function() {
     $.ajax({
-        url: 'actions/get_sales_over_time.php', 
+        url: 'actions/get_sales_by_biller.php',
         method: 'GET',
+        dataType: 'json', // Ensure the response is parsed as JSON
         success: function(response) {
-            
-            // console.log('Parsed data:', response.total_sales);
+            // Process data to group by biller_name and category_name
+            const categories = [];
+            const billers = {};
 
-            const seriesData = response.map(item => [item.sale_date, item.total_sales]);
+            response.forEach(item => {
+                const category = item.category_name;
+                if (!categories.includes(category)) {
+                    categories.push(category);
+                }
+            });
 
-            const options = {
+            response.forEach(item => {
+                const biller = item.biller_name;
+                const category = item.category_name;
+                const totalSales = parseFloat(item.total_sales);
+
+                if (!billers[biller]) {
+                    billers[biller] = categories.map(() => 0);
+                }
+
+                const categoryIndex = categories.indexOf(category);
+                billers[biller][categoryIndex] += totalSales;
+            });
+
+            const series = Object.keys(billers).map(biller => ({
+                name: biller,
+                data: billers[biller]
+            }));
+
+            var options = {
+                series: series,
                 chart: {
-                    type: 'line',
-                    renderTo: 'sales-over-time-chart'
+                    type: 'bar',
+                    height: 350,
+                    stacked: true
                 },
-                title: {
-                    text: 'Sales Over Time'
-                },
-                stroke: {
-                    width: [4, 4]
+                plotOptions: {
+                    bar: {
+                        horizontal: true,
+                    },
                 },
                 xaxis: {
-                    type: 'datetime',
-                    labels: {
-                        format: 'dd MMM yyyy' 
-                    },
-                    title: {
-                        text: 'Date'
-                    }
+                    categories: categories,
                 },
-                yAxis: {
-                    title: {
-                        text: 'Total Sales'
-                    }
-                },
-                series: [{
-                    name: 'Sales',
-                    data: seriesData
-                }],
-                colors: ['#28a745'] 
+                title: {
+                    text: 'Sales by Category and Biller'
+                }
             };
 
-            var chart = new ApexCharts(document.querySelector("#sales-over-time-chart"), options);
+            var chart = new ApexCharts(document.querySelector("#treemap"), options);
             chart.render();
         },
         error: function(error) {
@@ -247,6 +260,7 @@ $(document).ready(function() {
         }
     });
 });
+
 
 // stacked barchart for sales and biiler category
 $(document).ready(function() {
