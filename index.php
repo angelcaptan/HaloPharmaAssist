@@ -169,6 +169,7 @@ checkLogin();
                     <!-- Top profitable products will be populated here by JavaScript -->
                 </div>
             </div>
+            <!-- Sales Over Time -->
             <div class="col-lg-12">
                 <div class="card card-block card-stretch card-height">
                     <div class="card-header d-flex align-items-center justify-content-between">
@@ -176,12 +177,13 @@ checkLogin();
                             <h4 class="card-title">Sales Over Time</h4>
                         </div>
                         <div class="card-header-toolbar d-flex align-items-center"></div>
+                        </div>
                     </div>
-                    <div class="card-body">
-                        <div id="sales-over-time-chart"></div>
+                    <div id="sales-over-time-chart"></div>
                     </div>
                 </div>
             </div>
+            <!-- Sales By Billers -->
             <div class="col-lg-12">
                 <div class="card card-block card-stretch card-height">
                     <div class="card-header d-flex justify-content-between">
@@ -192,12 +194,11 @@ checkLogin();
                             <div><a href="#" class="btn light-gray view-btn"> Billers</a></div>
                         </div>
                     </div>
-                    <div class="card-body">
-                        <div id="treemap" style="min-height: 340px;">
-                        </div>
+                    <div id="treemap" style="min-height: 340px;">
                     </div>
                 </div>
             </div>
+           <!-- Category Distributions -->
             <div class="col-lg-12">
                 <div class="card card-block card-stretch card-height">
                     <div class="card-header d-flex align-items-center justify-content-between">
