@@ -177,7 +177,6 @@ checkLogin();
                             <h4 class="card-title">Sales Over Time</h4>
                         </div>
                         <div class="card-header-toolbar d-flex align-items-center"></div>
-                        </div>
                     </div>
                     <div id="sales-over-time-chart"></div>
                     </div>
