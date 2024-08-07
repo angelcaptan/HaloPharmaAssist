@@ -8,7 +8,7 @@ $supplier_details = include 'config/supplier_config.php';
 <!doctype html>
 <html lang="en">
 
-<?php include 'navigation.php'; ?>
+<?php include 'Navigation.php'; ?>
 <div class="content-page">
     <div class="container-fluid">
         <div class="row">
