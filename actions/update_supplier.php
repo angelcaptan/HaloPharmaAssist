@@ -1,7 +1,7 @@
 <?php
 
-//include '../permissions.php';
-//checkPermission('Manager'); // Only managers can update supplier details
+include '../permissions.php';
+checkPermission('Manager'); // Only managers can update supplier details
 include_once (__DIR__ . "/../controllers/general_controller.php");
 
 // Enable error reporting
@@ -9,11 +9,19 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST')
-   error_log('Posted data: ' . print_r($_POST, true));{
-    $supplier_name = $_POST['supplier_name'];
-    $supplier_email = $_POST['supplier_email'];
-    $supplier_phone = $_POST['supplier_phone'];
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $supplier_name = isset($_POST['supplier_name']) ? $_POST['supplier_name'] : null;
+    $supplier_email = isset($_POST['supplier_email']) ? $_POST['supplier_email'] : null;
+    $supplier_phone = isset($_POST['supplier_phone']) ? $_POST['supplier_phone'] : null;
+
+    // Log the posted data for debugging
+    error_log('Posted data: ' . print_r($_POST, true));
+
+    // Check for missing form inputs
+    if (is_null($supplier_name) || is_null($supplier_email) || is_null($supplier_phone)) {
+        echo "<script>alert('All fields are required. Please fill out the form completely.'); window.location.href = '../suppliers-details.php';</script>";
+        exit;
+    }
 
     $config_content = "<?php
 return [
