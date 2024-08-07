@@ -1,7 +1,7 @@
 <?php
 
-include '../permissions.php';
-checkPermission('Manager'); // Only managers can update supplier details
+//include '../permissions.php';
+//checkPermission('Manager'); // Only managers can update supplier details
 include_once (__DIR__ . "/../controllers/general_controller.php");
 
 // Enable error reporting
