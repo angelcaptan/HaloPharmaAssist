@@ -42,7 +42,9 @@ return [
 
     // Log the update action
     $general = new general_class();
-    session_start(); // Start session if not already started
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start(); // Start session if not already started
+    }
     if (isset($_SESSION['user_id'])) {
         $user_id = $_SESSION['user_id']; // Assuming the user ID is stored in the session
     } else {
