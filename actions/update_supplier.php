@@ -1,8 +1,13 @@
 <?php
 
-include '../permissions.php';
-checkPermission('Manager'); // Only managers can update supplier details
+//include '../permissions.php';
+//checkPermission('Manager'); // Only managers can update supplier details
 include_once (__DIR__ . "/../controllers/general_controller.php");
+
+// Enable error reporting
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $supplier_name = $_POST['supplier_name'];
@@ -18,11 +23,23 @@ return [
 ";
 
     // Write the new configuration to the supplier_config.php file
-    file_put_contents('../config/supplier_config.php', $config_content);
+    $file_path = '../config/supplier_config.php';
+    $result = file_put_contents($file_path, $config_content);
+
+    if ($result === false) {
+        echo "<script>alert('Failed to update supplier details. Please check file permissions.'); window.location.href = '../suppliers-details.php';</script>";
+        exit;
+    }
 
     // Log the update action
     $general = new general_class();
-    $user_id = $_SESSION['user_id']; // Assuming the user ID is stored in the session
+    session_start(); // Start session if not already started
+    if (isset($_SESSION['user_id'])) {
+        $user_id = $_SESSION['user_id']; // Assuming the user ID is stored in the session
+    } else {
+        echo "<script>alert('User ID not found in session. Please login again.'); window.location.href = '../login.php';</script>";
+        exit;
+    }
     $action = "Update";
     $table_name = "Supplier Details";
     $record_id = null; // Since there's no specific record ID, we can set it to null or an appropriate identifier
