@@ -9,7 +9,8 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST')
+   error_log('Posted data: ' . print_r($_POST, true));{
     $supplier_name = $_POST['supplier_name'];
     $supplier_email = $_POST['supplier_email'];
     $supplier_phone = $_POST['supplier_phone'];
