@@ -53,15 +53,9 @@ $supplier_details = include 'config/supplier_config.php';
                             </thead>
                             <tbody class="light-body">
                                 <tr>
-                                    <td><input type="text" name="supplier_name"
-                                            placeholder="<?php echo $supplier_details['supplier_name']; ?>" required>
-                                    </td>
-                                    <td><input type="email" name="supplier_email"
-                                            placeholder="<?php echo $supplier_details['supplier_email']; ?>" required>
-                                    </td>
-                                    <td><input type="text" name="supplier_phone"
-                                            placeholder="<?php echo $supplier_details['supplier_phone']; ?>" required>
-                                    </td>
+                                    <td><input type="text" name="supplier_name" placeholder="<?php echo $supplier_details['supplier_name']; ?>" required></td>
+                                    <td><input type="email" name="supplier_email" placeholder="<?php echo $supplier_details['supplier_email']; ?>" required></td>
+                                    <td><input type="text" name="supplier_phone" placeholder="<?php echo $supplier_details['supplier_phone']; ?>" required></td>
                                     <td><button type="submit" class="btn btn-primary">Update</button></td>
                                 </tr>
                             </tbody>
