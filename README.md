@@ -56,7 +56,7 @@ Model was deployed to `Heroku`.
 
 
 [Link to Deployed App on heroku](https://halopharmaassist-09a3d38d05c9.herokuapp.com/)
-[Link to GitHub Repository ](https://git.heroku.com/halopharmaassist.git)
+[Link to GitHub Repository ](https://github.com/angelcaptan/HaloPharmaAssist)
 
 
 
